@@ -1,5 +1,6 @@
 package com.danilove.kimura.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,13 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.danilove.kimura.R;
 import com.danilove.kimura.adapters.TvShowsAdapter;
 import com.danilove.kimura.databinding.ActivityMainBinding;
+import com.danilove.kimura.listeners.TvShowsListener;
 import com.danilove.kimura.models.TvShow;
 import com.danilove.kimura.viewmodels.MostPopularTVShowsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TvShowsListener {
 
     private ActivityMainBinding activityMainBinding;
     private MostPopularTVShowsViewModel viewModel;
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private void doInitialization() {
         activityMainBinding.tvShowRecyclerView.setHasFixedSize(true);
         this.viewModel = new ViewModelProvider(this).get(MostPopularTVShowsViewModel.class);
-        tvShowsAdapter = new TvShowsAdapter(tvShows);
+        tvShowsAdapter = new TvShowsAdapter(tvShows, this);
         activityMainBinding.tvShowRecyclerView.setAdapter(tvShowsAdapter);
         activityMainBinding.tvShowRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -88,5 +90,18 @@ public class MainActivity extends AppCompatActivity {
                 activityMainBinding.setIsLoadingMore(true);
             }
         }
+    }
+
+    @Override
+    public void onTvShowClicked(TvShow tvShow) {
+
+        Intent intent = new Intent(getApplicationContext(), TvShowDetailsActivity.class);
+        intent.putExtra("id", tvShow.getId());
+        intent.putExtra("name", tvShow.getName());
+        intent.putExtra("startDate", tvShow.getStartDate());
+        intent.putExtra("country", tvShow.getCountry());
+        intent.putExtra("network", tvShow.getNetwork());
+        intent.putExtra("status", tvShow.getStatus());
+        startActivity(intent);
     }
 }

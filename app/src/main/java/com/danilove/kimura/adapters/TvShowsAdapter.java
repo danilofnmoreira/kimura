@@ -1,6 +1,7 @@
 package com.danilove.kimura.adapters;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.danilove.kimura.R;
 import com.danilove.kimura.databinding.ItemContainerTvShowBinding;
+import com.danilove.kimura.listeners.TvShowsListener;
 import com.danilove.kimura.models.TvShow;
 
 import java.util.List;
@@ -17,9 +19,11 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowsV
 
     private List<TvShow> tvShows;
     private LayoutInflater layoutInflater;
+    private TvShowsListener tvShowsListener;
 
-    public TvShowsAdapter(List<TvShow> tvShows) {
+    public TvShowsAdapter(List<TvShow> tvShows, TvShowsListener tvShowsListener) {
         this.tvShows = tvShows;
+        this.tvShowsListener = tvShowsListener;
     }
 
     @NonNull
@@ -45,7 +49,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowsV
         return tvShows.size();
     }
 
-    static class TvShowsViewHolder extends RecyclerView.ViewHolder {
+     class TvShowsViewHolder extends RecyclerView.ViewHolder {
 
         private ItemContainerTvShowBinding itemContainerTvShowBinding;
 
@@ -57,6 +61,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowsV
         public void bindTvShow(TvShow tvShow) {
             itemContainerTvShowBinding.setTvShow(tvShow);
             itemContainerTvShowBinding.executePendingBindings();
+            itemContainerTvShowBinding.getRoot().setOnClickListener(view -> tvShowsListener.onTvShowClicked(tvShow));
         }
     }
 }
