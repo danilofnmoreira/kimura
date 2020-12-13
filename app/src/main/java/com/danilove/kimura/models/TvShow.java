@@ -1,12 +1,21 @@
 package com.danilove.kimura.models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-public class TvShow {
+@Setter
+@Entity(tableName = "tvShows")
+public class TvShow implements Serializable {
 
+    @PrimaryKey
     @SerializedName("id")
     private long id;
 
