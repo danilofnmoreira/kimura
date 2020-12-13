@@ -8,10 +8,10 @@ import lombok.Getter;
 public class Episode {
 
     @SerializedName("season")
-    private long season;
+    private String season;
 
     @SerializedName("episode")
-    private long episode;
+    private String episode;
 
     @SerializedName("name")
     private String name;
