@@ -1,6 +1,7 @@
 package com.danilove.kimura.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,6 +22,8 @@ import java.util.List;
 
 public class TvShowDetailsActivity extends AppCompatActivity {
 
+    private static final String TAG = "TvShowDetailsActivity";
+
     private ActivityTvShowDetailsBinding activityTvShowDetailsBinding;
     private TVShowDetailsViewModel viewModel;
 
@@ -34,6 +37,7 @@ public class TvShowDetailsActivity extends AppCompatActivity {
     private void doInitialization() {
 
         viewModel = new ViewModelProvider(this).get(TVShowDetailsViewModel.class);
+        activityTvShowDetailsBinding.imageBack.setOnClickListener(v -> onBackPressed());
         getTvShowDetails();
     }
 
@@ -41,6 +45,9 @@ public class TvShowDetailsActivity extends AppCompatActivity {
 
         activityTvShowDetailsBinding.setIsLoading(true);
         long tvShowId = getIntent().getLongExtra("id", -1L);
+
+        Log.d(TAG, "getTvShowDetails: tvShowId = " + tvShowId);
+
         viewModel
                 .findTvShowDetailsResponse(tvShowId)
                 .observe(this, response -> {
@@ -50,6 +57,10 @@ public class TvShowDetailsActivity extends AppCompatActivity {
                             loadImageSlider(response.getTvShow().getPictures());
                         }
                     }
+                    activityTvShowDetailsBinding.setTvShowImageUrl(
+                            response.getTvShow().getImagePath()
+                    );
+                    activityTvShowDetailsBinding.imageTvShow.setVisibility(View.VISIBLE);
                 });
     }
 

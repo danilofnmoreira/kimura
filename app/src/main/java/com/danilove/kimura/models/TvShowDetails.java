@@ -60,9 +60,6 @@ public class TvShowDetails {
     @SerializedName("rating_count")
     private String ratingCount;
 
-    @SerializedName("countdown")
-    private String countdown;
-
     private List<String> genres;
 
     private List<String> pictures;
