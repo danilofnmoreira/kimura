@@ -5,11 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class TvShowsResponse {
 
     @SerializedName("total")
@@ -20,4 +15,36 @@ public class TvShowsResponse {
     private long pages;
     @SerializedName("tv_shows")
     private List<TvShow> tvShows;
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
+
+    public long getPage() {
+        return page;
+    }
+
+    public void setPage(long page) {
+        this.page = page;
+    }
+
+    public long getPages() {
+        return pages;
+    }
+
+    public void setPages(long pages) {
+        this.pages = pages;
+    }
+
+    public List<TvShow> getTvShows() {
+        return tvShows;
+    }
+
+    public void setTvShows(List<TvShow> tvShows) {
+        this.tvShows = tvShows;
+    }
 }
