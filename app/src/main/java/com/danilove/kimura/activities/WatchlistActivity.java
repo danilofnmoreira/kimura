@@ -13,6 +13,7 @@ import com.danilove.kimura.adapters.WatchlistAdapter;
 import com.danilove.kimura.databinding.ActivityWatchlistBinding;
 import com.danilove.kimura.listeners.WatchlistListener;
 import com.danilove.kimura.models.TvShow;
+import com.danilove.kimura.utilities.TemDataHolder;
 import com.danilove.kimura.viewmodels.WatchlistViewModel;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class WatchlistActivity extends AppCompatActivity implements WatchlistLis
         viewModel = new ViewModelProvider(this).get(WatchlistViewModel.class);
         activityWatchlistBinding.imageBack.setOnClickListener(view -> onBackPressed());
         watchlist = new ArrayList<>();
+        loadWatchlist();
     }
 
     private void loadWatchlist() {
@@ -67,7 +69,10 @@ public class WatchlistActivity extends AppCompatActivity implements WatchlistLis
     @Override
     protected void onResume() {
         super.onResume();
-        loadWatchlist();
+        if(TemDataHolder.IS_WATCHLIST_UPDATED) {
+            loadWatchlist();
+            TemDataHolder.IS_WATCHLIST_UPDATED = false;
+        }
     }
 
     @Override

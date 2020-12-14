@@ -25,4 +25,6 @@ public interface TvShowDao {
     @Delete
     Completable removeFromWatchlist(TvShow tvShow);
 
+    @Query("SELECT * FROM tvShows WHERE id = :tvShowId")
+    Flowable<TvShow> getTvShowFromWatchlist(long tvShowId);
 }
